@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="resources"/>
+	<classpathentry kind="src" path="java"/>
+	<classpathentry kind="lib" path="/template_project_gradle/lib/commons-codec-1.3.jar"/>
+	<classpathentry kind="lib" path="/template_project_gradle/lib/jade.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.slf4j:slf4j-simple:1.7.25"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.github.ev3dev-lang-java:ev3dev-lang-java:2.6.2-SNAPSHOT"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: org.slf4j:slf4j-api:1.7.25"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: com.github.ev3dev-lang-java:lejos-commons:0.7.3"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Gradle: net.java.dev.jna:jna:4.5.2"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

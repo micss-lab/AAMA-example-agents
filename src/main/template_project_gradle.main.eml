@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inheritJdk="true">
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$/../../src/main"/>
+	<lib name="commons-codec-1.3.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/commons-codec-1.3.jar!/"/>
+	</lib>
+	<lib name="jade.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/jade.jar!/"/>
+	</lib>
+	<levels>
+		<level name="Gradle: org.slf4j:slf4j-simple:1.7.25" value="project"/>
+		<level name="Gradle: com.github.ev3dev-lang-java:ev3dev-lang-java:2.6.2-SNAPSHOT" value="project"/>
+		<level name="Gradle: org.slf4j:slf4j-api:1.7.25" value="project"/>
+		<level name="Gradle: com.github.ev3dev-lang-java:lejos-commons:0.7.3" value="project"/>
+		<level name="Gradle: net.java.dev.jna:jna:4.5.2" value="project"/>
+	</levels>
+</component>
