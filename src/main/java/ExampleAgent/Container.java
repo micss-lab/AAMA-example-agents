@@ -17,11 +17,11 @@ public class Container   {
         try {
             Runtime runtime = Runtime.instance();
             Properties properties = new ExtendedProperties();
-            properties.setProperty(Profile.GUI, "true");
+            properties.setProperty(Profile.GUI, "false");
             Profile profile = new ProfileImpl(properties);
             AgentContainer agentContainer=runtime.createMainContainer(profile);
 
-            DigitalTwin.Container.start();
+            Container.start();
 
             AgentController agentProducer=agentContainer.createNewAgent("AgentProducer",
                     "ExampleAgent.ExampleAgentProducer",new Object[]{});

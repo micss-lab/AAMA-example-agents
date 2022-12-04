@@ -2,7 +2,7 @@ package RabbitMQUtils;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.MessageProperties;
-import org.json.JSONObject;
+import org.json.JSONArray;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -17,7 +17,7 @@ public class RabbitMQPublisher {
         this.channel = RabbitMQHelper.connectChannel();
     }
 
-    public void sendMessage(JSONObject msgJSON) throws IOException {
+    public void sendMessage(JSONArray msgJSON) throws IOException {
         byte[] msgByte = msgJSON.toString().getBytes(StandardCharsets.UTF_8);
         channel.basicPublish("", queueName, MessageProperties.MINIMAL_PERSISTENT_BASIC, msgByte);
 
