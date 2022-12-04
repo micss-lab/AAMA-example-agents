@@ -1,6 +1,7 @@
 package RabbitMQUtils;
 
 import com.rabbitmq.client.*;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,7 +15,7 @@ public class RabbitMQConsumer {
 
     private final Channel channel;
 
-    private JSONObject msgJSON;
+    private JSONArray msgJSON;
 
     private String oldMsgBody = "";
     private boolean isNewMessage;
@@ -26,36 +27,36 @@ public class RabbitMQConsumer {
     }
 
     private void connectQueue() throws Exception {
-        channel.queueBind(this.queueName, "amq.direct", "");
+//        channel.queueBind(this.queueName, "amq.direct", "");
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
     }
 
     public void startConsume() throws Exception {
         connectQueue();
-        channel.basicConsume(queueName, false, new DefaultConsumer(channel) {
+        channel.basicConsume(queueName, true, new DefaultConsumer(channel) {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 final String msgBody = new String(body, StandardCharsets.UTF_8); // a 'final' copy of the body that you can pass to the runnable
                 final long msgTag = envelope.getDeliveryTag();
 
                 try {
-                    msgJSON = new JSONObject(msgBody);
+                    msgJSON = new JSONArray(msgBody);
                 } catch (JSONException e) {
                     System.out.println("Message Body is not a valid JSON.");
                 } finally {
-                    channel.basicAck(envelope.getDeliveryTag(), false);
                     isNewMessage = !Objects.equals(oldMsgBody, msgBody);
                     oldMsgBody = msgBody;
                 }
             }
         });
+        System.out.println("TESTTSTTSTTSSSSSSSSSSSSSSSSSSSSSSS");
     }
 
     public boolean getIsNewMessage() {
         return isNewMessage;
     }
 
-    public JSONObject getMsgJSON() {
+    public JSONArray getMsgJSON() {
         isNewMessage = false;
         return msgJSON;
     }

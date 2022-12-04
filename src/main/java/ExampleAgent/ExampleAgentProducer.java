@@ -4,7 +4,7 @@ import RabbitMQUtils.RabbitMQPublisher;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
-import org.json.JSONObject;
+import org.json.JSONArray;
 
 import java.io.IOException;
 
@@ -16,7 +16,7 @@ public class ExampleAgentProducer extends Agent {
         String robotName = "robot1";
 
         String queueName = robotName + "_cmd";
-        rabbitMQPublisher = new RabbitMQPublisher(queueName);
+//        rabbitMQPublisher = new RabbitMQPublisher(queueName);
     }
 
     @Override
@@ -27,14 +27,15 @@ public class ExampleAgentProducer extends Agent {
                 //  MessageTemplate messageTemplate = MessageTemplate.MatchPerformative(INFORM);
                 ACLMessage Message=receive();
                 if (Message!=null) {  /** Recieve Messages*/
-                    JSONObject robotPosMsg = new JSONObject(Message.getContent());
+                    JSONArray robotPosMsg = new JSONArray(Message.getContent());
 
                     System.out.println(robotPosMsg);
-                    try {
-                        rabbitMQPublisher.sendMessage(robotPosMsg);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+//                    try {
+//                        rabbitMQPublisher.sendMessage(robotPosMsg);
+//
+//                    } catch (IOException e) {
+//                        throw new RuntimeException(e);
+//                    }
                 }
                 else {
                     block();  /** Block CyclicBehaviour If there is no message **/

@@ -14,34 +14,54 @@ import static jade.lang.acl.ACLMessage.INFORM;
 
 public class ExampleAgentConsumer extends Agent {
 
-    private RabbitMQConsumer robotPosConsumer;
+    private RabbitMQConsumer uwbConsumer, sonarConsumer, imuConsumer;
 
     private static final String TARGET_AGENT = "AgentProducer";
 
     public ExampleAgentConsumer() throws Exception {
-        String robotName = "robot1";
+//        String robotName = "robot1";
 
-        String queueName = robotName + "_pos";
-        robotPosConsumer = new RabbitMQConsumer(queueName);
+        String uwbQueueName = "uwb";
+        uwbConsumer = new RabbitMQConsumer(uwbQueueName);
+        String sonarQueueName = "sonar";
+        sonarConsumer = new RabbitMQConsumer(sonarQueueName);
+        String imuQueueName = "imu";
+        imuConsumer = new RabbitMQConsumer(imuQueueName);
     }
 
-    private void startConsumerThread() {
-        Thread t1 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    robotPosConsumer.startConsume();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-        t1.start();
+    private void startConsumerThread() throws Exception {
+//        Thread t1 = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    robotPosConsumer.startConsume();
+//                } catch (Exception e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+//        });
+//        t1.start();
+        uwbConsumer.startConsume();
+        sonarConsumer.startConsume();
+        imuConsumer.startConsume();
+    }
+
+    private void sendACLMessage(String msgBody) {
+        ACLMessage messageTemplate = new ACLMessage(INFORM);
+        messageTemplate.addReceiver(new AID(TARGET_AGENT, AID.ISLOCALNAME));
+
+        messageTemplate.setContent(uwbConsumer.getMsgJSON().toString());
+
+        send(messageTemplate);
     }
 
     @Override
     public void setup() {
-        startConsumerThread();
+        try {
+            startConsumerThread();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         addBehaviour(new CyclicBehaviour() {
             @Override
@@ -51,15 +71,23 @@ public class ExampleAgentConsumer extends Agent {
                 Sequential.addSubBehaviour(new OneShotBehaviour() {
                     @Override
                     public void action() {
-                        if (robotPosConsumer.getIsNewMessage()){
+                        if (uwbConsumer.getIsNewMessage()){
                             try {
-                                ACLMessage messageTemplate = new ACLMessage(INFORM);
-                                messageTemplate.addReceiver(new AID(TARGET_AGENT, AID.ISLOCALNAME));
-
-                                messageTemplate.setContent(robotPosConsumer.getMsgJSON().toString());
-
-                                send(messageTemplate);
-                                System.out.println(robotPosConsumer.getMsgJSON());
+                                System.out.println(uwbConsumer.getMsgJSON());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if (sonarConsumer.getIsNewMessage()){
+                            try {
+                                System.out.println(sonarConsumer.getMsgJSON());
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if (imuConsumer.getIsNewMessage()){
+                            try {
+                                System.out.println(imuConsumer.getMsgJSON());
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
