@@ -145,54 +145,6 @@ public class RobotControllerAgent extends Agent {
 
                     robotCtrlMsgs[robotPosMsg.robot_id] = ctrlMsg;
 
-//                    for (UWB robotPosMsg : robotPosMsgs) {
-//                        double posX = robotPosMsg.position.x;
-//                        double posY = robotPosMsg.position.y;
-//                        double yaw = Math.toRadians(robotPosMsg.orientation.z);
-//                        checkCurrentGoal(getGoalDistance(posX, posY));
-//
-//                        double goalX = getCurrentGoal()[0];
-//                        double goalY = getCurrentGoal()[1];
-//                        double goalAngle = Math.toRadians(getCurrentGoal()[2]);
-//                        double lastRotation = Math.toRadians(robotsArray.get(robotPosMsg.robot_id).orientation.z);
-//
-//                        double angular;
-//                        double linear;
-//
-//                        double pathAngle = Math.atan2(goalY - posY, goalX - posX);
-//
-//
-//                        if (pathAngle < -(Math.PI / 4) || pathAngle > Math.PI / 4) {
-//                            if (goalY < 0 && posY < goalY)
-//                                pathAngle = -2 * Math.PI + pathAngle;
-//                            else if (goalY >= 0 && posY > goalY)
-//                                pathAngle = 2 * Math.PI + pathAngle;
-//                        }
-//                        if (lastRotation > Math.PI - 0.1 && yaw <= 0)
-//                            yaw = 2 * Math.PI + yaw;
-//                        else if (lastRotation < -Math.PI + 0.1 && yaw > 0)
-//                            yaw = -2 * Math.PI + yaw;
-//
-//                        angular = angularSpeed * (pathAngle - yaw);
-//
-//                        double distance = getGoalDistance(posX, posY);
-//                        if (distance < 0.5)
-//                            linear = 0;
-//                        else
-//                            linear = Math.min(linearSpeed * distance, 0.1);
-//
-//                        if (angular > 0)
-//                            angular = Math.max(angular, 0.1);
-//                        else
-//                            angular = Math.max(angular, -0.1);
-//
-//                        robotsArray.set(robotPosMsg.robot_id, robotPosMsg);
-//                        RobotControl ctrlMsg = composeRobotControlMsg(linear, angular);
-//                        ctrlMsg.robot_id = robotPosMsg.robot_id;
-//
-//                        robotCtrlMsgs[robotPosMsg.robot_id] = ctrlMsg;
-//                    }
-
                     try {
                         String msgString = gson.toJson(robotCtrlMsgs);
                         rabbitMQPublisher.sendMessage(msgString);
