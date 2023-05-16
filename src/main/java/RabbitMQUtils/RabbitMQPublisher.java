@@ -17,10 +17,10 @@ public class RabbitMQPublisher {
         this.channel = RabbitMQHelper.connectChannel();
     }
 
-    public void sendMessage(JSONArray msgJSON) throws IOException {
-        byte[] msgByte = msgJSON.toString().getBytes(StandardCharsets.UTF_8);
+    public void sendMessage(String msgJSON) throws IOException {
+        byte[] msgByte = msgJSON.getBytes(StandardCharsets.UTF_8);
         channel.basicPublish("", queueName, MessageProperties.MINIMAL_PERSISTENT_BASIC, msgByte);
 
-        System.out.println(" [x] Sent '" + msgJSON + "'");
+//        System.out.println(" [x] Sent '" + msgJSON + "'");
     }
 }

@@ -24,9 +24,9 @@ public class Container   {
             Container.start();
 
             AgentController agentProducer=agentContainer.createNewAgent("AgentProducer",
-                    "ExampleAgent.ExampleAgentProducer",new Object[]{});
+                    "ExampleAgent.RobotControllerAgent",new Object[]{});
             AgentController agentConsumer=agentContainer.createNewAgent("AgentConsumer",
-                    "ExampleAgent.ExampleAgentConsumer",new Object[]{});
+                    "ExampleAgent.CommInterfaceAgent",new Object[]{});
             agentProducer.start();
             agentConsumer.start();
         } catch (Exception e) {
