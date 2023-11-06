@@ -27,7 +27,6 @@ public class RabbitMQConsumer {
     }
 
     private void connectQueue() throws Exception {
-//        channel.queueBind(this.queueName, "amq.direct", "");
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
     }
 
@@ -49,7 +48,6 @@ public class RabbitMQConsumer {
                 }
             }
         });
-        System.out.println("TESTTSTTSTTSSSSSSSSSSSSSSSSSSSSSSS");
     }
 
     public boolean getIsNewMessage() {

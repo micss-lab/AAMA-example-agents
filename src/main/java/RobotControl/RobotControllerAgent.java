@@ -39,6 +39,8 @@ public class RobotControllerAgent extends Agent {
         a.orientation.z = 90.0;
         robotsArray.add(a);
 
+        // Right now this control only optimized for 1 robot. However you can add more as seen in the comments below
+
 //        UWB b = new UWB();
 //        b.robot_id = 1;
 //        b.orientation.z = 90.0;
@@ -51,14 +53,14 @@ public class RobotControllerAgent extends Agent {
     }
 
     private void setPoints() {
-        pointsArray.add(new double[]{2.0, 0.0, 90.0});
-        pointsArray.add(new double[]{0.0, 2.0, 90.0});
-        pointsArray.add(new double[]{1.0, 3.0, 90.0});
-        pointsArray.add(new double[]{2.0, 5.0, 90.0});
-        pointsArray.add(new double[]{1.0, 6.0, 90.0});
-        pointsArray.add(new double[]{0.0, 6.0, 90.0});
-        pointsArray.add(new double[]{0.0, 0.0, 90.0});
-        pointsArray.add(new double[]{2.0, 2.0, 90.0});
+        pointsArray.add(new double[]{5.0, 0.0, -180.0});
+        pointsArray.add(new double[]{0.0, 2.0, -180.0});
+        pointsArray.add(new double[]{1.0, 3.0, -180.0});
+        pointsArray.add(new double[]{2.0, 5.0, -180.0});
+        pointsArray.add(new double[]{1.0, 6.0, -180.0});
+        pointsArray.add(new double[]{0.0, 6.0, -180.0});
+        pointsArray.add(new double[]{0.0, 0.0, -180.0});
+        pointsArray.add(new double[]{2.0, 2.0, -180.0});
     }
     private double[] getCurrentGoal() {
         return pointsArray.get(0);
@@ -72,7 +74,7 @@ public class RobotControllerAgent extends Agent {
     }
 
     private void checkCurrentGoal(double goalDistance) {
-        if (goalDistance < 0.1) {
+        if (goalDistance < 0.5) {
             System.out.println("POINT UPDATED");
             pointsArray.remove(0);
         }
@@ -100,8 +102,12 @@ public class RobotControllerAgent extends Agent {
                 if (Message != null) {  /** Recieve Messages*/
 //                    JSONArray robotPosMsgs = new JSONArray(Message.getContent());
                     UWB[] robotPosMsgs = gson.fromJson(Message.getContent(), UWB[].class);
-//                    System.out.println(robotPosMsgs);
+
                     RobotControl[] robotCtrlMsgs = new RobotControl[robotPosMsgs.length];
+
+                    // This logic is a basic control algorithm without any PID controller.
+                    // Basically checks every step if the robot close enough to goal
+                    // And update the angular and linear speed for getting close
 
                     UWB robotPosMsg = robotPosMsgs[0];
                     double posX = robotPosMsg.position.x;
@@ -124,6 +130,7 @@ public class RobotControllerAgent extends Agent {
 
                     double distance = getGoalDistance(posX, posY);
 
+                    // This part is for adjusting approach speed of the robot. Right now it is really slow for testing.
                     if (distance < 0.1 || Math.abs(Math.toDegrees(diffGoalAngle)) > 25){
                         linear = 0;
                     }
