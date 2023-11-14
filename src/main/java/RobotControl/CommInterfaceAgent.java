@@ -77,7 +77,7 @@ public class CommInterfaceAgent extends Agent {
                             try {
                                 // Example for parsing the Sonar message into a JSON object. Check RobotMsgs package.
                                 Sonar[] sonarArray = gson.fromJson(sonarConsumer.getMsgJSON().toString(), Sonar[].class);
-                                System.out.println(sonarArray[0].header.frame_id);
+//                                System.out.println(sonarArray[0].header.frame_id);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -85,7 +85,7 @@ public class CommInterfaceAgent extends Agent {
                         if (imuConsumer.getIsNewMessage()) {
                             try {
                                 IMU[] imuArray = gson.fromJson(imuConsumer.getMsgJSON().toString(), IMU[].class);
-                                System.out.println(imuArray[0].header.frame_id);
+//                                System.out.println(imuArray[0].header.frame_id);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

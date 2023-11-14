@@ -118,7 +118,7 @@ public class RobotControllerAgent extends Agent {
                     double goalX = getCurrentGoal()[0];
                     double goalY = getCurrentGoal()[1];
                     double goalAngle = Math.toRadians(getCurrentGoal()[2]);
-                    double lastRotation = Math.toRadians(robotsArray.get(robotPosMsg.robot_id).orientation.z);
+                    double lastRotation = Math.toRadians(robotsArray.get(0).orientation.z);
 
                     double angular;
                     double linear;
@@ -146,7 +146,7 @@ public class RobotControllerAgent extends Agent {
                     else
                         angular = Math.min(angular, -0.1);
 
-                    robotsArray.set(robotPosMsg.robot_id, robotPosMsg);
+                    robotsArray.set(0, robotPosMsg);
                     RobotControl ctrlMsg = composeRobotControlMsg(linear, angular);
                     ctrlMsg.robot_id = robotPosMsg.robot_id;
 
